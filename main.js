@@ -346,11 +346,9 @@ function loadAboutText() {
         return match ? match[1].trim() : '';
       };
 
-      const image = getSection('Image');
       const en = getSection('EN');
       const fr = getSection('FR');
-
-      document.getElementById('about-image').src = `images/${image}`;
+      
       document.getElementById('about-text-en').innerHTML = en.replace(/\n/g, '<br>');
       document.getElementById('about-text-fr').innerHTML = fr.replace(/\n/g, '<br>');
     });
