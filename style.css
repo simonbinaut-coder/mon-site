@@ -355,93 +355,73 @@ section img[alt="Animation illustrative"] {
 }
 
 /* Témoignages */
+/* ===================== */
+/* Dropdown visible au-dessus du menu */
+.temoignages-dropdown {
+  text-align: center;
+  margin-bottom: 20px;
+  position: relative;
+  z-index: 1100; /* Supérieur au menu */
+}
+
+#temoignages-select {
+  padding: 8px 12px;
+  font-size: 14px;
+  border-radius: 5px;
+  border: 1px solid #ccc;
+  background: #F1EBDD;
+  cursor: pointer;
+}
+
+/* Conteneur des cards desktop */
 .temoignages-container {
   position: relative;
-  height: auto;
-  width: 100%;
-  min-height: 550px;
-  margin: 40px auto;
   max-width: 1200px;
+  margin: 40px auto;
+  min-height: 550px;
   overflow: visible;
-  transition: height 0.4s ease; /* Transition fluide pour les changements de hauteur */
 }
 
-/* Style des cartes */
+/* Card desktop */
 .temoignage-card {
   position: absolute;
-  width: 85%;
-  height: auto;
-  min-height: 500px;
-  top: 0;
-  left: 10%;
-  background: #F1EBDD; /* Couleur secondaire pour toute la card */
-  border-radius: 10px;
-  box-shadow: 0 10px 30px rgba(0,0,0,0.2);
-  transition: all 0.6s cubic-bezier(0.68, -0.55, 0.265, 1.55);
-  opacity: 0.5;
-  transform: scale(0.8);
-  z-index: 1;
-  overflow: hidden;
-  display: flex;
-}
-
-/* Positionnement global : toutes les cards empilées */
-.temoignage-card {
   top: 0;
   left: 50%;
   transform: translateX(-50%) scale(0.8);
   opacity: 0;
+  width: 85%;
+  min-height: 500px;
+  background: #F1EBDD;
+  border-radius: 10px;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+  transition: all 0.6s ease;
   z-index: 0;
+  display: flex;
+  overflow: hidden;
 }
 
-/* Seule la card active est visible au centre */
+/* Card active */
 .temoignage-card.active {
   opacity: 1;
   transform: translateX(-50%) scale(1);
   z-index: 10;
-}
-
-
-/* Quand la carte est active */
-.temoignage-card.active {
-  opacity: 1;
-  transform: scale(1);
-  left: 10% !important;
-  z-index: 10 !important;
   box-shadow: 0 20px 40px rgba(0,0,0,0.3);
 }
 
-/* Contenu de la carte */
+/* Contenu card */
 .card-content {
   display: flex;
   width: 100%;
-  min-height: 100%;
-  background: #F1EBDD; /* couleur de fond cohérente */
 }
 
 .card-image-container {
   flex: 1;
-  background: #F1EBDD;
-}
-
-.card-text-container {
-  flex: 1.5;
-  background: #F7F5EE;
-}
-
-
-/* Conteneur pour la photo */
-.card-image-container {
-  width: 40%;
   padding: 20px;
   display: flex;
-  flex-direction: column;
-  align-items: center;
   justify-content: center;
-  background: #F1EBDD; /* Couleur secondaire du site */
+  align-items: center;
 }
 
-/* Style de l'image */
 .card-image-container img {
   max-width: 100%;
   max-height: 300px;
@@ -449,98 +429,48 @@ section img[alt="Animation illustrative"] {
   border-radius: 5px;
 }
 
-/* Conteneur pour le texte (modifié pour le centrage) */
 .card-text-container {
-  width: 60%;
+  flex: 1.5;
   padding: 20px;
   display: flex;
   flex-direction: column;
   justify-content: center;
-  text-align: center; /* Centrage du texte */
-  background: #F7F5EE; /* Couleur principale pour la zone texte */
-  min-height: 100%; /* Force à prendre toute la hauteur */
+  text-align: center;
+  background: #F7F5EE;
 }
 
-/* Style du titre (centré) */
 .card-text-container h3 {
-  margin: 0 0 15px 0;
-  color: #333;
-  font-size: 1.4em;
-  line-height: 1.2;
-  text-align: center; /* Centrage explicite */
+  margin-bottom: 15px;
 }
 
-/* Style du texte (centré mais avec un padding pour éviter que ce soit collé aux bords) */
 .card-text-container p {
-  margin: 0 auto 15px;
-  line-height: 1.6;
-  font-size: 0.95em;
   max-height: 350px;
   overflow: hidden;
-  text-align: center; /* Centrage */
-  padding: 0 15px; /* Espace latéral */
   white-space: pre-line;
-  transition: max-height 0.4s ease; /* Animation fluide pour le déploiement */
+  transition: max-height 0.3s ease;
 }
 
-
-/* Bouton "Lire plus" (centré) */
 .read-more-btn {
-  display: none; /* Caché par défaut */
-  margin: 10px auto 0; /* Centrage horizontal */
+  display: none;
+  margin: 10px auto 0;
   padding: 8px 16px;
   background: #333;
-  color: white;
+  color: #fff;
   border: none;
   border-radius: 15px;
   cursor: pointer;
-  font-size: 0.9em;
-  transition: background 0.3s;
 }
 
-.read-more-btn:hover {
-  background: #555;
-}
-
-/* Style des noms des témoignages */
-.noms-temoignages {
-  display: flex;
-  gap: 15px;
-  margin: 0 auto 30px;
-  justify-content: center;
-  flex-wrap: wrap;
-}
-
-.nom {
-  cursor: pointer;
-  padding: 8px 16px;
-  background: #F1EBDD; /* Couleur secondaire du site */
-  border-radius: 20px;
-  transition: all 0.3s;
-  font-size: 0.9em;
-}
-
-.nom:hover, .nom.active {
-  background: #F1EBDD;
-  color: #333;
-}
-
-.temoignages-container {
-  display: block;
-}
+/* MOBILE */
 .temoignages-mobile {
   display: none;
-}
-
-/* Responsive pour les témoignages sur mobile */
-.temoignages-mobile {
-  display: none; /* affichée seulement en mobile */
-  margin-top: 1.5rem;
+  max-width: 90%;
+  margin: 20px auto;
 }
 
 .temoignages-mobile .temoignage {
-  display: none; /* caché par défaut */
-  background: #F7F5EE; /* Couleur principale du site */
+  display: none;
+  background: #F7F5EE;
   border-radius: 8px;
   padding: 1rem;
   margin-bottom: 1.2rem;
@@ -548,77 +478,27 @@ section img[alt="Animation illustrative"] {
 }
 
 .temoignages-mobile .temoignage.active {
-  display: block; /* affiche seulement celui sélectionné */
+  display: block;
 }
 
 .temoignages-mobile img {
-  width: 80%;              /* plus petite que la largeur de l’écran */
-  max-height: 200px;       /* limite la hauteur */
-  height: auto;
-  object-fit: contain;     /* pas rognée */
-  display: block;
-  margin: 0 auto 0.8rem;   /* centrée et espacée */
+  width: 80%;
+  max-height: 200px;
+  object-fit: contain;
+  margin: 0 auto 0.8rem;
   border-radius: 6px;
 }
 
-.temoignages-mobile h3 {
-  font-size: 1rem;
-  margin-bottom: 0.6rem;
-}
-
-.temoignages-mobile p {
-  font-size: 1rem;
-  line-height: 1.7;
-  text-align: justify;
-  padding: 0 10px;
-  white-space: pre-line;
-}
-
-/* ============================= */
-/* Responsive Breakpoint Mobile */
-/* ============================= */
+/* Responsive */
 @media (max-width: 768px) {
   .temoignages-container {
-    display: none; /* on masque les cards */
+    display: none;
   }
-
   .temoignages-mobile {
-    display: block; /* on active la version mobile */
+    display: block;
   }
-
-  .noms-temoignages {
-    display: flex;
-    justify-content: center;
-    gap: 1rem;
-    margin-bottom: 1rem;
-    flex-wrap: wrap;
-  }
-
-  .noms-temoignages .nom {
-    font-size: 0.9rem;
-    padding: 0.4rem 0.8rem;
-    background: #F1EBDD; /* Couleur secondaire du site */
-    border-radius: 6px;
-    cursor: pointer;
-  }
-
-  .noms-temoignages .nom.active {
-    background: #F1EBDD;
-    color: #333;
-  }
-  .temoignages-mobile h3 {
-  font-size: 1.1rem;
-  text-align: center;
-  font-weight: 600;
-  margin-bottom: 0.8rem;
-  color: #333;
 }
-}
-p {
-  font-size: 14px;       /* taille du texte plus petite */
-  line-height: 2.2;      /* interlignage plus aéré */
-  font-family: 'Open Sans', sans-serif;
-}
+
 
 /* ================================
    FONTS PERSONNALISÉES
@@ -646,4 +526,85 @@ p {
   src: url("fonts/Poppins-ExtraLight.ttf") format("truetype");
   font-weight: 200;
   font-style: normal;
+}
+
+/* Sous-menu Témoignages */
+.nav-links li ul.submenu {
+  display: none;
+  position: absolute;
+  top: 100%;
+  left: 0;
+  background: #F1EBDD;
+  padding: 5px 0;
+  list-style: none;
+  min-width: 180px;
+  border-radius: 5px;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+  z-index: 1050;
+}
+
+.nav-links li ul.submenu li {
+  padding: 5px 15px;
+}
+
+.nav-links li ul.submenu li a {
+  display: block;
+  padding: 5px 0;
+  font-size: 14px;
+}
+
+/* Hover pour desktop */
+.nav-links li:hover ul.submenu {
+  display: block;
+}
+
+/* Sous-menu mobile (affiché au clic) */
+@media (max-width: 768px) {
+  .nav-links li ul.submenu {
+    position: static;
+    display: none;
+    flex-direction: column;
+    padding: 0;
+    box-shadow: none;
+  }
+
+  .nav-links li.active ul.submenu {
+    display: flex;
+  }
+}
+
+/* Sous-menu Témoignages */
+.has-submenu {
+  position: relative; /* IMPORTANT : le sous-menu se positionne par rapport à ce li */
+}
+
+.has-submenu .submenu {
+  display: none;
+  position: absolute;
+  top: 100%; /* juste en dessous du lien Témoignages */
+  left: 0;    /* aligné à gauche du li */
+  background-color: #F1EBDD;
+  list-style: none;
+  padding: 10px 0;
+  margin: 0;
+  min-width: 200px; /* largeur du sous-menu */
+  box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+  z-index: 1000;
+}
+
+.has-submenu:hover .submenu {
+  display: block;
+}
+
+.has-submenu .submenu li a {
+  display: block;
+  padding: 8px 15px;
+  color: #333;
+  font-size: 14px;
+  text-decoration: none;
+  white-space: nowrap;
+}
+
+.has-submenu .submenu li a:hover {
+  background-color: #E6DFC7;
 }
