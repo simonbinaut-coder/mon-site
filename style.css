@@ -619,3 +619,31 @@ p {
   line-height: 2.2;      /* interlignage plus aéré */
   font-family: 'Open Sans', sans-serif;
 }
+
+/* ================================
+   FONTS PERSONNALISÉES
+================================ */
+
+/* Avenir Light */
+@font-face {
+  font-family: "AvenirLight";
+  src: url("fonts/Avenir Light.ttf") format("truetype");
+  font-weight: 300;
+  font-style: normal;
+}
+
+/* Cormorant Garamond Light */
+@font-face {
+  font-family: "CormorantGaramondLight";
+  src: url("fonts/CormorantGaramond-Light.ttf") format("truetype");
+  font-weight: 300;
+  font-style: normal;
+}
+
+/* Poppins ExtraLight */
+@font-face {
+  font-family: "PoppinsExtraLight";
+  src: url("fonts/Poppins-ExtraLight.ttf") format("truetype");
+  font-weight: 200;
+  font-style: normal;
+}
