@@ -155,12 +155,13 @@ function setupContactForm() {
 // ==============================
 // SCROLL HERO
 // ==============================
-window.addEventListener("scroll", () => {
-  const hero = document.querySelector(".hero-section");
-  if (!hero) return;
-
-  const offset = Math.min(window.scrollY * 0.5, 150);
-  hero.style.backgroundPosition = `center ${-50 + offset}px`;
+window.addEventListener('scroll', function() {
+  const hero = document.querySelector('.hero-section');
+  if (hero) {
+    const scrollPosition = window.scrollY;
+    const offset = scrollPosition * 0.15; // facteur léger
+    hero.style.backgroundPosition = `center ${-offset}px`;
+  }
 });
 
 // ==============================
