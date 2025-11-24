@@ -474,7 +474,7 @@ section img[alt="Animation illustrative"] {
 
 /* MOBILE */
 .temoignages-mobile {
-  display: none;
+  display: block;
   max-width: 90%;
   margin: 20px auto;
 }
@@ -500,6 +500,11 @@ section img[alt="Animation illustrative"] {
   margin: 0 auto 0.8rem;
   display: block; /* Assure que l'image est un bloc pour le centrage */
   border-radius: 6px;
+}
+
+/* Désactive les règles pour .temoignages-container */
+.temoignages-container {
+  display: none;
 }
 
 /* Responsive */

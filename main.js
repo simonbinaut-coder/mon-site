@@ -4,17 +4,13 @@
 function loadPage(page) {
   const content = document.getElementById('content');
   content.style.opacity = '0';
-
   setTimeout(() => {
     fetch(`pages/${page}.html?t=${Date.now()}`)
       .then(r => r.ok ? r.text() : "<p>Page introuvable.</p>")
       .then(html => {
-
         content.innerHTML = html;
         setActiveLink(page);
-
         setTimeout(() => content.style.opacity = '1', 50);
-
         // Initialise les pages
         if (page === 'insta') loadElfsightScript();
         if (page === 'temoignages') setupTemoignages();
@@ -38,52 +34,77 @@ function handleHashChange() {
   loadPage(page);
 }
 
+// Fonction pour pré-charger les témoignages et construire le sous-menu
+async function preloadTemoignagesSubmenu() {
+  try {
+    const submenu = document.querySelector('#menu-temoignages .submenu');
+    if (!submenu) return;
+
+    const response = await fetch('/content/temoignages.json?t=' + Date.now());
+    if (!response.ok) throw new Error(`Erreur HTTP : ${response.status}`);
+    const txtFiles = await response.json();
+
+    // Charge uniquement les métadonnées nécessaires pour le sous-menu
+    const temoignages = await Promise.all(
+      txtFiles.map(async file => {
+        try {
+          const r = await fetch(`/content/temoignages/${file}?t=${Date.now()}`);
+          if (!r.ok) throw new Error(`Erreur HTTP : ${r.status}`);
+          const text = await r.text();
+
+          const get = name => {
+            const m = text.match(new RegExp(`\\[${name}\\]\\s*([\\s\\S]*?)(?=\\[|$)`));
+            return m ? m[1].trim() : "";
+          };
+
+          return {
+            id: file.replace('.txt', ''),
+            douleur: get("Douleur")
+          };
+        } catch (e) {
+          console.error(`Erreur dans ${file} :`, e);
+          return null;
+        }
+      })
+    );
+
+    const temoignagesValides = temoignages.filter(t => t !== null && t.douleur);
+    if (temoignagesValides.length === 0) {
+      console.error("Aucun témoignage valide pour le sous-menu.");
+      return;
+    }
+
+    // Met à jour le sous-menu
+    submenu.innerHTML = temoignagesValides.map(t =>
+      `<li><a href="#temoignages" data-id="${t.id}">${t.douleur}</a></li>`
+    ).join('');
+
+    // Ajoute les écouteurs d'événements
+    submenu.querySelectorAll('a').forEach(a => {
+      a.addEventListener('click', e => {
+        e.preventDefault();
+        const id = a.dataset.id;
+        window.temoignageToShow = id;
+        location.hash = '#temoignages';
+        navLinks.classList.remove('show');
+        burger.classList.remove('toggle');
+      });
+    });
+  } catch (e) {
+    console.error("Erreur lors du pré-chargement des témoignages :", e);
+  }
+}
+
 // ==============================
 // INITIALISATION GLOBALE
 // ==============================
 window.addEventListener('DOMContentLoaded', () => {
-  buildTemoignagesSubmenu();   // IMPORTANT : construit le sous-menu AVANT usage
+  preloadTemoignagesSubmenu();  // Précharge le sous-menu des témoignages
   handleHashChange();
 });
 
 // Hash change listener
 window.addEventListener('hashchange', handleHashChange);
-
-// ==============================
-// SOUS-MENU TEMOIGNAGES (NAV)
-// ==============================
-function buildTemoignagesSubmenu() {
-  const menu = document.querySelector('#menu-temoignages .submenu');
-  if (!menu) return;
-
-  menu.innerHTML = ids.map(id =>
-    `<li><a href="#" data-id="${id}">${menuNames[id]}</a></li>`
-  ).join('');
-
-  menu.querySelectorAll('a').forEach(a => {
-    a.addEventListener('click', e => {
-      e.preventDefault();
-      const id = a.dataset.id;
-
-      if (location.hash === '#temoignages') {
-        // Déjà sur la page → afficher immédiatement
-        if (typeof window.showTemoignage === "function") {
-          window.showTemoignage(id);
-        } else {
-          window.temoignageToShow = id;
-        }
-      } else {
-        // On change de page
-        window.temoignageToShow = id;
-        location.hash = '#temoignages';
-      }
-
-      // Ferme le menu mobile
-      navLinks.classList.remove('show');
-      burger.classList.remove('toggle');
-    });
-  });
-}
 
 // ==============================
 // INSTAGRAM
@@ -104,12 +125,10 @@ function loadElfsightScript() {
 function setupContactForm() {
   const btn = document.getElementById('submit-btn');
   if (!btn) return;
-
   btn.onclick = (e) => {
     e.preventDefault();
     const form = document.getElementById('contact-form');
     const data = new FormData(form);
-
     fetch("https://formspree.io/f/movlbbbd", {
       method: "POST",
       body: data,
@@ -143,152 +162,116 @@ window.addEventListener('scroll', function() {
 // TÉMOIGNAGES
 // ==============================
 async function setupTemoignages() {
-  const containerDesktop = document.querySelector('.temoignages-container');
-  const containerMobile = document.querySelector('.temoignages-mobile');
-
-  // Lire tous les fichiers dans le dossier content/temoignages
-  const response = await fetch('content/temoignages/');
-  const files = await response.text();
-  const parser = new DOMParser();
-  const html = parser.parseFromString(files, 'text/html');
-  const fileLinks = Array.from(html.querySelectorAll('a')).map(a => a.getAttribute('href'));
-
-  // Filtrer les fichiers .txt
-  const txtFiles = fileLinks.filter(file => file.endsWith('.txt'));
-
-  // Charger chaque fichier texte
-  const temoignages = await Promise.all(txtFiles.map(async file => {
-    const id = file.replace('.txt', '');
-    const r = await fetch(`content/temoignages/${file}?t=${Date.now()}`);
-    const text = await r.text();
-
-    const get = name => {
-      const m = text.match(new RegExp(`\\[${name}\\]\\s*([\\s\\S]*?)(?=\\[|$)`));
-      return m ? m[1].trim() : "";
-    };
-
-    return {
-      id,
-      titre: get("Titre"),
-      texte: get("Texte"),
-      image: get("Image"),
-      douleur: get("Douleur")
-    };
-  }));
-
-  // Construire le sous-menu dynamiquement
-  const submenu = document.querySelector('#menu-temoignages .submenu');
-  if (submenu) {
-    submenu.innerHTML = temoignages.map(t =>
-      `<li><a href="#" data-id="${t.id}">${t.douleur}</a></li>`
-    ).join('');
-  }
-
-  // Ajouter les écouteurs d'événements pour le sous-menu
-  submenu.querySelectorAll('a').forEach(a => {
-    a.addEventListener('click', e => {
-      e.preventDefault();
-      const id = a.dataset.id;
-      if (location.hash === '#temoignages') {
-        if (typeof window.showTemoignage === "function") {
-          window.showTemoignage(id);
-        } else {
-          window.temoignageToShow = id;
-        }
-      } else {
-        window.temoignageToShow = id;
-        location.hash = '#temoignages';
-      }
-      navLinks.classList.remove('show');
-      burger.classList.remove('toggle');
-    });
-  });
-
-  // HTML Desktop
-  containerDesktop.innerHTML = temoignages.map(t => `
-    <div id="${t.id}" class="temoignage-card">
-      <div class="card-content">
-        <div class="card-image-container">
-          <img src="images/${t.image}" alt="${t.titre}" onerror="this.style.display='none'">
-        </div>
-        <div class="card-text-container">
-          <h3>${t.titre}</h3>
-          <p>${t.texte}</p>
-          <button class="read-more-btn">Lire plus</button>
-        </div>
-      </div>
-    </div>
-  `).join('');
-
-  // HTML Mobile
-  containerMobile.innerHTML = temoignages.map(t => `
-    <div id="mobile-${t.id}" class="temoignage">
-      <img src="images/${t.image}" alt="${t.titre}" onerror="this.style.display='none'">
-      <h3>${t.titre}</h3>
-      <p>${t.texte}</p>
-    </div>
-  `).join('');
-
-  // Fonction globale pour changer de témoignage
-  window.showTemoignage = function(id) {
-    document.querySelectorAll('.temoignage-card').forEach(c => c.classList.remove('active'));
-    document.querySelectorAll('.temoignages-mobile .temoignage').forEach(c => c.classList.remove('active'));
-    document.getElementById(id)?.classList.add('active');
-    document.getElementById("mobile-" + id)?.classList.add('active');
-    setupReadMoreButtons();
-    adjustContainerHeight();
-  };
-
-  function adjustContainerHeight() {
-    const active = containerDesktop.querySelector('.temoignage-card.active');
-    if (active) {
-      containerDesktop.style.height = active.scrollHeight + 40 + "px";
+  try {
+    const containerMobile = document.querySelector('.temoignages-mobile');
+    const submenu = document.querySelector('#menu-temoignages .submenu');
+    if (!containerMobile || !submenu) {
+      console.error("Conteneurs introuvables dans le DOM.");
+      return;
     }
-  }
 
-  function setupReadMoreButtons() {
-    document.querySelectorAll('.temoignage-card').forEach(card => {
-      const p = card.querySelector('p');
-      const btn = card.querySelector('.read-more-btn');
-      if (p.scrollHeight > 350) {
-        p.style.maxHeight = "350px";
-        btn.style.display = "block";
-        btn.textContent = "Lire plus";
-        btn.onclick = () => {
-          const expanded = p.style.maxHeight === "none";
-          p.style.maxHeight = expanded ? "350px" : "none";
-          btn.textContent = expanded ? "Lire plus" : "Lire moins";
-          adjustContainerHeight();
-        };
-      } else {
-        btn.style.display = "none";
-      }
+    // Charge la liste des fichiers
+    const response = await fetch('/content/temoignages.json?t=' + Date.now());
+    if (!response.ok) throw new Error(`Erreur HTTP : ${response.status}`);
+    const txtFiles = await response.json();
+    console.log("Fichiers à charger :", txtFiles);
+
+    // Charge chaque fichier
+    const temoignages = await Promise.all(
+      txtFiles.map(async file => {
+        try {
+          const r = await fetch(`/content/temoignages/${file}?t=${Date.now()}`);
+          if (!r.ok) throw new Error(`Erreur HTTP : ${r.status}`);
+          const text = await r.text();
+          const get = name => {
+            const m = text.match(new RegExp(`\\[${name}\\]\\s*([\\s\\S]*?)(?=\\[|$)`));
+            return m ? m[1].trim() : "";
+          };
+          const temoignage = {
+            id: file.replace('.txt', ''),
+            titre: get("Titre"),
+            texte: get("Texte"),
+            image: get("Image"),
+            douleur: get("Douleur")
+          };
+          if (!temoignage.titre || !temoignage.texte || !temoignage.douleur) {
+            console.warn(`Témoignage incomplet dans ${file} :`, temoignage);
+            return null;
+          }
+          return temoignage;
+        } catch (e) {
+          console.error(`Erreur dans ${file} :`, e);
+          return null;
+        }
+      })
+    );
+
+    const temoignagesValides = temoignages.filter(t => t !== null);
+    if (temoignagesValides.length === 0) {
+      console.error("Aucun témoignage valide.");
+      return;
+    }
+
+    // Met à jour le sous-menu
+    submenu.innerHTML = temoignagesValides.map(t =>
+      `<li><a href="#temoignages" data-id="${t.id}">${t.douleur}</a></li>`
+    ).join('');
+
+    // Ajoute les écouteurs d'événements pour le sous-menu
+    submenu.querySelectorAll('a').forEach(a => {
+      a.addEventListener('click', e => {
+        e.preventDefault();
+        const id = a.dataset.id;
+        window.temoignageToShow = id;
+        if (location.hash === '#temoignages') {
+          if (typeof window.showTemoignage === "function") {
+            window.showTemoignage(id);
+          }
+        } else {
+          location.hash = '#temoignages';
+        }
+        navLinks.classList.remove('show');
+        burger.classList.remove('toggle');
+      });
     });
-  }
 
-  // Afficher le premier témoignage par défaut
-  if (temoignages.length > 0) {
+    // Met à jour le HTML pour mobile (et PC)
+    containerMobile.innerHTML = temoignagesValides.map(t => `
+      <div id="mobile-${t.id}" class="temoignage">
+        <img src="/images/${t.image}" alt="${t.titre}" onerror="this.style.display='none'">
+        <h3>${t.titre}</h3>
+        <p>${t.texte}</p>
+      </div>
+    `).join('');
+
+    // Fonction pour afficher un témoignage
+    window.showTemoignage = function(id) {
+      document.querySelectorAll('.temoignages-mobile .temoignage').forEach(c => c.classList.remove('active'));
+      const mobileCard = document.getElementById(`mobile-${id}`);
+      if (mobileCard) mobileCard.classList.add('active');
+    };
+
+    // Affiche le témoignage sélectionné ou le premier par défaut
     if (window.temoignageToShow) {
       window.showTemoignage(window.temoignageToShow);
       window.temoignageToShow = null;
     } else {
-      window.showTemoignage(temoignages[0].id);
+      window.showTemoignage(temoignagesValides[0].id);
     }
+  } catch (e) {
+    console.error("Erreur dans setupTemoignages :", e);
   }
 }
-
 
 // ==============================
 // BURGER MOBILE
 // ==============================
 const burger = document.getElementById('burger');
 const navLinks = document.getElementById('nav-links');
-
 burger.addEventListener('click', () => {
   navLinks.classList.toggle('show');
   burger.classList.toggle('toggle');
 });
-
 // Quand on clique sur un lien → fermer
 navLinks.querySelectorAll('a').forEach(a => {
   a.addEventListener('click', () => {
