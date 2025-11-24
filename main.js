@@ -1,29 +1,4 @@
 // ==============================
-// VARIABLES GLOBALES
-// ==============================
-
-// Mapping fichier -> nom affiché dans le sous-menu
-const menuNames = {
-  resultats: "Mes résultats",
-  bea: "Hyperlaxité / Hypermobility",
-  emma: "Douleurs hanche / Hip pain",
-  marvin: "Mal de dos / Back pain",
-  brice: "Genou douloureux / Knee pain",
-  garance: "Hallux Valgus",
-  elodie: "Pectus Excavatum",
-  philippe: "Renforcement général / General strength training",
-  carina: "Douleurs cervicales / Neck pain",
-  melanie: "Réalignement structure / Structure optimisation",
-  noemie: "Scoliose / Scoliosis"
-};
-
-// Liste des fichiers de témoignages
-const ids = [
-  'resultats','bea','emma','marvin','brice',
-  'garance','elodie','philippe','carina','melanie','noemie'
-];
-
-// ==============================
 // CHARGEMENT DYNAMIQUE DES PAGES
 // ==============================
 function loadPage(page) {
@@ -168,13 +143,23 @@ window.addEventListener('scroll', function() {
 // TÉMOIGNAGES
 // ==============================
 async function setupTemoignages() {
-
   const containerDesktop = document.querySelector('.temoignages-container');
   const containerMobile = document.querySelector('.temoignages-mobile');
 
-  // Charger fichiers
-  const temoignages = await Promise.all(ids.map(async id => {
-    const r = await fetch(`content/temoignages/${id}.txt?t=${Date.now()}`);
+  // Lire tous les fichiers dans le dossier content/temoignages
+  const response = await fetch('content/temoignages/');
+  const files = await response.text();
+  const parser = new DOMParser();
+  const html = parser.parseFromString(files, 'text/html');
+  const fileLinks = Array.from(html.querySelectorAll('a')).map(a => a.getAttribute('href'));
+
+  // Filtrer les fichiers .txt
+  const txtFiles = fileLinks.filter(file => file.endsWith('.txt'));
+
+  // Charger chaque fichier texte
+  const temoignages = await Promise.all(txtFiles.map(async file => {
+    const id = file.replace('.txt', '');
+    const r = await fetch(`content/temoignages/${file}?t=${Date.now()}`);
     const text = await r.text();
 
     const get = name => {
@@ -186,9 +171,38 @@ async function setupTemoignages() {
       id,
       titre: get("Titre"),
       texte: get("Texte"),
-      image: get("Image")
+      image: get("Image"),
+      douleur: get("Douleur")
     };
   }));
+
+  // Construire le sous-menu dynamiquement
+  const submenu = document.querySelector('#menu-temoignages .submenu');
+  if (submenu) {
+    submenu.innerHTML = temoignages.map(t =>
+      `<li><a href="#" data-id="${t.id}">${t.douleur}</a></li>`
+    ).join('');
+  }
+
+  // Ajouter les écouteurs d'événements pour le sous-menu
+  submenu.querySelectorAll('a').forEach(a => {
+    a.addEventListener('click', e => {
+      e.preventDefault();
+      const id = a.dataset.id;
+      if (location.hash === '#temoignages') {
+        if (typeof window.showTemoignage === "function") {
+          window.showTemoignage(id);
+        } else {
+          window.temoignageToShow = id;
+        }
+      } else {
+        window.temoignageToShow = id;
+        location.hash = '#temoignages';
+      }
+      navLinks.classList.remove('show');
+      burger.classList.remove('toggle');
+    });
+  });
 
   // HTML Desktop
   containerDesktop.innerHTML = temoignages.map(t => `
@@ -219,10 +233,8 @@ async function setupTemoignages() {
   window.showTemoignage = function(id) {
     document.querySelectorAll('.temoignage-card').forEach(c => c.classList.remove('active'));
     document.querySelectorAll('.temoignages-mobile .temoignage').forEach(c => c.classList.remove('active'));
-
     document.getElementById(id)?.classList.add('active');
     document.getElementById("mobile-" + id)?.classList.add('active');
-
     setupReadMoreButtons();
     adjustContainerHeight();
   };
@@ -238,12 +250,10 @@ async function setupTemoignages() {
     document.querySelectorAll('.temoignage-card').forEach(card => {
       const p = card.querySelector('p');
       const btn = card.querySelector('.read-more-btn');
-
       if (p.scrollHeight > 350) {
         p.style.maxHeight = "350px";
         btn.style.display = "block";
         btn.textContent = "Lire plus";
-
         btn.onclick = () => {
           const expanded = p.style.maxHeight === "none";
           p.style.maxHeight = expanded ? "350px" : "none";
@@ -256,14 +266,17 @@ async function setupTemoignages() {
     });
   }
 
-  // Si un témoignage avait été demandé avant chargement → afficher
-  if (window.temoignageToShow) {
-    window.showTemoignage(window.temoignageToShow);
-    window.temoignageToShow = null;
-  } else {
-    window.showTemoignage(temoignages[0].id);
+  // Afficher le premier témoignage par défaut
+  if (temoignages.length > 0) {
+    if (window.temoignageToShow) {
+      window.showTemoignage(window.temoignageToShow);
+      window.temoignageToShow = null;
+    } else {
+      window.showTemoignage(temoignages[0].id);
+    }
   }
 }
+
 
 // ==============================
 // BURGER MOBILE

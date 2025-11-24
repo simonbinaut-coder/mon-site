@@ -278,19 +278,40 @@ section#contact {
 .form-group textarea {
   resize: vertical;
 }
-.btn {
-  background-color: #0077cc;
-  color: white;
-  border: none;
-  padding: 10px 20px;
-  border-radius: 4px;
-  cursor: pointer;
-  font-weight: 500;
-  transition: background-color 0.3s ease;
+
+/* Réduction de l'espacement dans la page Contact (mobile) */
+@media (max-width: 768px) {
+  .contact-container {
+    gap: 20px; /* Réduit l'espace entre les colonnes */
+  }
+
+  .contact-form {
+    margin-top: 10px; /* Réduit la marge supérieure */
+  }
+
+  .form-group {
+    margin-bottom: 10px; /* Réduit l'espace entre les champs */
+  }
+
+  /* Pour la page Home (hero section) */
+  .hero-section {
+    padding-top: 80px; /* Réduit le padding supérieur */
+  }
+
+  .hero-text {
+    padding: 15px 20px; /* Réduit le padding du texte */
+  }
+
+  h1 {
+    font-size: 2.2rem; /* Réduit la taille du titre */
+    margin-bottom: 10px; /* Réduit la marge inférieure */
+  }
+
+  h3 {
+    font-size: 1.5rem; /* Réduit la taille du sous-titre */
+  }
 }
-.btn:hover {
-  background-color: #005599;
-}
+
 
 /* Style pour le GIF dans la page "À propos" */
 section img[alt="Animation illustrative"] {
@@ -465,6 +486,7 @@ section img[alt="Animation illustrative"] {
   padding: 1rem;
   margin-bottom: 1.2rem;
   box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+  text-align: center; /* Ajoute cette ligne pour centrer le texte */
 }
 
 .temoignages-mobile .temoignage.active {
@@ -476,6 +498,7 @@ section img[alt="Animation illustrative"] {
   max-height: 200px;
   object-fit: contain;
   margin: 0 auto 0.8rem;
+  display: block; /* Assure que l'image est un bloc pour le centrage */
   border-radius: 6px;
 }
 
@@ -637,4 +660,30 @@ a.button:hover {
   display: block;
   /* border-radius: 30px;  --> pas nécessaire si le conteneur a déjà l'arrondi */
 }
+
+/* Correction de la vidéo en portrait (mobile) */
+@media (max-width: 768px) {
+  .video-wrapper {
+    width: 80%; /* Prend toute la largeur */
+    max-width: 100%; /* Ratio 16:9 pour paysage */
+    margin: 30px auto;
+    border-radius: 30px;
+    overflow: hidden;
+    position: relative;
+  }
+
+  /* Vidéo pour mobile */
+  #about-video {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    border-radius: 15px; /* Optionnel : si tu veux aussi arrondir la vidéo elle-même */
+  }
+}
+
+
+
+
 
