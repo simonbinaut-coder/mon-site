@@ -158,7 +158,7 @@ header.navbar {
   background-color: rgba(0, 0, 0, 0);
   padding: 20px 40px;
   border-radius: 10px;
-  padding-top: 450px;
+  padding-top: 300px;
 }
 h1 {
 font-size: 75px;
@@ -289,13 +289,17 @@ section#contact {
     margin-top: 10px; /* Réduit la marge supérieure */
   }
 
+  .contact-info {
+    margin-top: -50px;
+  }
+
   .form-group {
     margin-bottom: 10px; /* Réduit l'espace entre les champs */
   }
 
   /* Pour la page Home (hero section) */
   .hero-section {
-    padding-top: 80px; /* Réduit le padding supérieur */
+    padding-top: 200px; /* Réduit le padding supérieur */
   }
 
   .hero-text {
@@ -306,6 +310,8 @@ section#contact {
     font-size: 2.2rem; /* Réduit la taille du titre */
     margin-bottom: 10px; /* Réduit la marge inférieure */
   }
+
+}
 
   h3 {
     font-size: 1.5rem; /* Réduit la taille du sous-titre */
@@ -688,7 +694,33 @@ a.button:hover {
   }
 }
 
+.temoignage-douleur {
+  text-align: center;
+  font-size: 1.5rem;
+  font-weight: bold;
+  margin-bottom: 20px;
+  color: #2c3e50;
+  text-transform: uppercase;
+}
 
+.temoignage-signature {
+  text-align: right;
+  font-style: italic;
+  margin-top: 10px;
+  color: #555;
+}
+
+@media (min-width: 769px) {
+  .temoignage img {
+    max-width: 70%;    /* augmenter par rapport à mobile */
+    max-height: 400px; /* ajuste la hauteur max */
+    margin: 0 auto 20px;
+    display: block;
+    border-radius: 8px;
+    object-fit: contain;
+    margin-top: -50px;
+  }
+}
 
 
 

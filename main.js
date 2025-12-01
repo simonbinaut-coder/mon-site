@@ -192,7 +192,8 @@ async function setupTemoignages() {
             titre: get("Titre"),
             texte: get("Texte"),
             image: get("Image"),
-            douleur: get("Douleur")
+            douleur: get("Douleur"),
+            signature: get("Signature")
           };
           if (!temoignage.titre || !temoignage.texte || !temoignage.douleur) {
             console.warn(`Témoignage incomplet dans ${file} :`, temoignage);
@@ -237,18 +238,29 @@ async function setupTemoignages() {
 
     // Met à jour le HTML pour mobile (et PC)
     containerMobile.innerHTML = temoignagesValides.map(t => `
-      <div id="mobile-${t.id}" class="temoignage">
+    <div id="mobile-${t.id}" class="temoignage">
+      <div class="container">
         <img src="/images/${t.image}" alt="${t.titre}" onerror="this.style.display='none'">
         <h3>${t.titre}</h3>
         <p>${t.texte}</p>
+        ${t.signature ? `<p class="temoignage-signature">${t.signature}</p>` : ''}
       </div>
-    `).join('');
+    </div>
+  `).join('');
 
     // Fonction pour afficher un témoignage
     window.showTemoignage = function(id) {
+      // 1. Active le témoignage correspondant
       document.querySelectorAll('.temoignages-mobile .temoignage').forEach(c => c.classList.remove('active'));
       const mobileCard = document.getElementById(`mobile-${id}`);
       if (mobileCard) mobileCard.classList.add('active');
+
+      // 2. Met à jour le nom de la douleur
+      const temoignage = temoignagesValides.find(t => t.id === id);
+      const titreDouleur = document.getElementById('temoignage-douleur');
+      if (titreDouleur && temoignage) {
+        titreDouleur.textContent = temoignage.douleur;
+      }
     };
 
     // Affiche le témoignage sélectionné ou le premier par défaut

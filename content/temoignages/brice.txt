@@ -1,7 +1,9 @@
 [Titre]
 ONLINE TRAINING
+
 [Image]
 brice.jpg
+
 [Texte]
 Quand j’ai commencé le coaching avec Laetitia, je ne pouvais pas faire plus d'une centaine de mètre en descente (escaliers ou pente) sans avoir les genoux en feu. Il m’était impossible de faire un footing de plus d’un kilomètre sans boiter pendant quelques jours par la suite, ça faisait des années que ça durait.
 Je m’étais résigné et fait à l’idée que mes douleurs aux genoux ne pouvait plus s’arranger. J’avais aussi des douleurs au niveau des omoplates et de grosses tensions dans les trapèzes. 
@@ -12,7 +14,8 @@ Ma posture s’est également améliorée, ce qui m’a permis de relâcher pas 
 Mais aujourd’hui, grâce à Laetitia et Functional Patterns, je comprends mieux comment fonctionne mon corps.
 Je peux donc envisager un futur plus serein et ça me motive à redoubler d’effort pour pouvoir de nouveau courir plusieurs kilomètres et bouger sans douleur (bientôt!)
 ​
-
-Brice - 32 ans
 [Douleur]
 Genou douloureux / Knee pain
+
+[Signature]
+Brice - 32 ans

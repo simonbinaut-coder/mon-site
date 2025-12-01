@@ -1,7 +1,9 @@
 [Titre]
 IN PERSON TRAINING
+
 [Image]
 carina.jpg
+
 [Texte]
 « Je m’entraîne avec Laëtitia depuis un an. Je vais commencer par la fin: j’ai grandi de 1 centimètre! Et j’ai 49 ans!! ;-)
 
@@ -17,6 +19,9 @@ Merci Laëtitia! »
 
 ​
 
-Carina A - 50 ans
+
 [Douleur]
 Douleurs cervicales / Neck pain
+
+[Signature]
+Carina A - 50 ans
