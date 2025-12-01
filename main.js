@@ -40,7 +40,7 @@ async function preloadTemoignagesSubmenu() {
     const submenu = document.querySelector('#menu-temoignages .submenu');
     if (!submenu) return;
 
-    const response = await fetch('/content/temoignages.json?t=' + Date.now());
+    const response = await fetch('content/temoignages.json?t=' + Date.now());
     if (!response.ok) throw new Error(`Erreur HTTP : ${response.status}`);
     const txtFiles = await response.json();
 
@@ -48,7 +48,7 @@ async function preloadTemoignagesSubmenu() {
     const temoignages = await Promise.all(
       txtFiles.map(async file => {
         try {
-          const r = await fetch(`/content/temoignages/${file}?t=${Date.now()}`);
+          const r = await fetch(`content/temoignages/${file}?t=${Date.now()}`);
           if (!r.ok) throw new Error(`Erreur HTTP : ${r.status}`);
           const text = await r.text();
 
@@ -171,7 +171,7 @@ async function setupTemoignages() {
     }
 
     // Charge la liste des fichiers
-    const response = await fetch('/content/temoignages.json?t=' + Date.now());
+    const response = await fetch('content/temoignages.json?t=' + Date.now());
     if (!response.ok) throw new Error(`Erreur HTTP : ${response.status}`);
     const txtFiles = await response.json();
     console.log("Fichiers à charger :", txtFiles);
@@ -180,7 +180,7 @@ async function setupTemoignages() {
     const temoignages = await Promise.all(
       txtFiles.map(async file => {
         try {
-          const r = await fetch(`/content/temoignages/${file}?t=${Date.now()}`);
+          const r = await fetch(`content/temoignages/${file}?t=${Date.now()}`);
           if (!r.ok) throw new Error(`Erreur HTTP : ${r.status}`);
           const text = await r.text();
           const get = name => {
