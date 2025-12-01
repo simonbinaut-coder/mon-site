@@ -240,7 +240,7 @@ async function setupTemoignages() {
     containerMobile.innerHTML = temoignagesValides.map(t => `
     <div id="mobile-${t.id}" class="temoignage">
       <div class="container">
-        <img src="/images/${t.image}" alt="${t.titre}" onerror="this.style.display='none'">
+        <img src="images/${t.image}" alt="${t.titre}" onerror="this.style.display='none'">
         <h3>${t.titre}</h3>
         <p>${t.texte}</p>
         ${t.signature ? `<p class="temoignage-signature">${t.signature}</p>` : ''}
