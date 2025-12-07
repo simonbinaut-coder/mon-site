@@ -293,6 +293,25 @@ navLinks.querySelectorAll('a').forEach(a => {
 });
 
 // ==============================
+// OUVERTURE DU SOUS-MENU "TÉMOIGNAGES" SUR MOBILE
+// ==============================
+const temoignagesMenu = document.querySelector('#menu-temoignages');
+
+if (temoignagesMenu) {
+  temoignagesMenu.addEventListener('click', (e) => {
+
+    // Seulement sur mobile
+    if (window.innerWidth > 768) return;
+
+    // Empêche la navigation immédiate
+    e.preventDefault();
+
+    // Toggle ouverture
+    temoignagesMenu.classList.toggle('active');
+  });
+}
+
+// ==============================
 // ABOUT
 // ==============================
 function loadAboutText() {
