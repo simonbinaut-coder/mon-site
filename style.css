@@ -617,7 +617,8 @@ section img[alt="Animation illustrative"] {
 }
 
 .has-submenu:hover .submenu {
-  display: block;
+  max-height: 500px;
+  opacity: 1;
 }
 
 .has-submenu .submenu li a {
@@ -632,6 +633,31 @@ section img[alt="Animation illustrative"] {
 .has-submenu .submenu li a:hover {
   background-color: #E6DFC7;
 }
+
+.has-submenu .submenu {
+  max-height: 0;
+  overflow: hidden;
+  transition: max-height 0.3s ease;
+  opacity: 0;
+}
+
+/* Sous-menu ouvert */
+.has-submenu.open .submenu {
+  max-height: 500px; 
+  opacity: 1;
+}
+
+/* Petite flèche visuelle */
+.has-submenu > a::after {
+  content: "▾";
+  margin-left: 6px;
+  font-size: 0.8em;
+  transition: 0.3s;
+}
+
+.has-submenu.open > a::after {
+  transform: rotate(180deg);
+} 
 
 /* Style des nouveaux boutons */
 button,
@@ -722,5 +748,7 @@ a.button:hover {
   }
 }
 
-
+section {
+  scroll-margin-top: 150px; /* même hauteur que ton menu fixe */
+}
 

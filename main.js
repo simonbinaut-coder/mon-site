@@ -276,43 +276,37 @@ async function setupTemoignages() {
 }
 
 // ==============================
-// BURGER MOBILE
+// BURGER MOBILE + ACCORDÉON SOUS-MENU TÉMOIGNAGES
 // ==============================
+
 const burger = document.getElementById('burger');
 const navLinks = document.getElementById('nav-links');
+const temoignagesMenu = document.getElementById('menu-temoignages');
+
 burger.addEventListener('click', () => {
   navLinks.classList.toggle('show');
   burger.classList.toggle('toggle');
 });
-// Quand on clique sur un lien → fermer
+
+// Gestion des clics sur les liens du menu
 navLinks.querySelectorAll('a').forEach(a => {
   a.addEventListener('click', (e) => {
-        if (window.innerWidth <= 768 && a.closest('#menu-temoignages')) {
-      return;
+    const liParent = a.closest("li.has-submenu");
+
+    if (window.innerWidth <= 768 && liParent) {
+      // Mobile : clic sur Témoignages => toggle sous-menu
+      if (a.nextElementSibling && a.nextElementSibling.classList.contains('submenu')) {
+        e.preventDefault(); // empêche le hash temporairement
+        liParent.classList.toggle("open");
+        return;
+      }
     }
+
+    // Tous les autres liens : fermer le menu
     navLinks.classList.remove('show');
     burger.classList.remove('toggle');
   });
 });
-
-// ==============================
-// OUVERTURE DU SOUS-MENU "TÉMOIGNAGES" SUR MOBILE
-// ==============================
-const temoignagesMenu = document.querySelector('#menu-temoignages');
-
-if (temoignagesMenu) {
-  temoignagesMenu.addEventListener('click', (e) => {
-
-    // Seulement sur mobile
-    if (window.innerWidth > 768) return;
-
-    // Empêche la navigation immédiate
-    e.preventDefault();
-
-    // Toggle ouverture
-    temoignagesMenu.classList.toggle('active');
-  });
-}
 
 // ==============================
 // ABOUT
@@ -340,3 +334,8 @@ function loadFunctionalPatternsText() {
       document.getElementById('fp-text').innerHTML = text.replace(/\n/g, '<br>');
     });
 }
+
+ // Quand la page est complètement chargée
+  window.addEventListener('load', () => {
+    window.scrollTo(0, 0); // Remet le scroll en haut
+  });
