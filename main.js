@@ -286,7 +286,10 @@ burger.addEventListener('click', () => {
 });
 // Quand on clique sur un lien → fermer
 navLinks.querySelectorAll('a').forEach(a => {
-  a.addEventListener('click', () => {
+  a.addEventListener('click', (e) => {
+        if (window.innerWidth <= 768 && a.closest('#menu-temoignages')) {
+      return;
+    }
     navLinks.classList.remove('show');
     burger.classList.remove('toggle');
   });
