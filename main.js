@@ -17,6 +17,7 @@ function loadPage(page) {
         if (page === 'contact') setupContactForm();
         if (page === 'about') loadAboutText();
         if (page === 'functionnal_patterns') loadFunctionalPatternsText();
+        if (page === 'seances') loadSeancesText();
       });
   }, 300);
 }
@@ -331,11 +332,127 @@ function loadFunctionalPatternsText() {
   fetch('content/fp.txt?t=' + Date.now())
     .then(r => r.text())
     .then(text => {
-      document.getElementById('fp-text').innerHTML = text.replace(/\n/g, '<br>');
+      const extractTag = (txt, tag) => {
+        const regex = new RegExp(`\\[${tag}\\]\\s*([\\s\\S]*?)(?=\\n\\[|$)`, 'i');
+        const match = txt.match(regex);
+        return match ? match[1].trim() : "";
+      };
+
+      // Récupération du texte
+      let enText = extractTag(text, "EN");
+      let frText = extractTag(text, "FR");
+
+      // Remplacement du séparateur [SEPARATOR] par le div existant
+      enText = enText.replace(/\[SEPARATOR\]/gi, '').trim();
+      frText = frText.replace(/\[SEPARATOR\]/gi, '').trim();
+
+      // Bouton et image
+      const link = extractTag(text, "Lien");
+      const image = extractTag(text, "Image");
+
+      // Affichage des textes
+      const enEl = document.getElementById('fp-text-en');
+      const frEl = document.getElementById('fp-text-fr');
+      if (enEl) enEl.innerHTML = enText.replace(/\n/g, '<br>');
+      if (frEl) frEl.innerHTML = frText.replace(/\n/g, '<br>');
+
+      // Bouton
+      const btnEl = document.getElementById('fp-button');
+      if (btnEl && link) btnEl.href = link;
+
+      // Image
+      const imgEl = document.getElementById('fp-image');
+      if (imgEl && image) imgEl.src = 'images/' + image;
+    })
+    .catch(err => {
+      console.error("Erreur loadFunctionalPatternsText:", err);
+      document.getElementById('fp-text-en').innerHTML = "<p>Impossible de charger le contenu.</p>";
     });
 }
 
- // Quand la page est complètement chargée
-  window.addEventListener('load', () => {
-    window.scrollTo(0, 0); // Remet le scroll en haut
-  });
+
+
+
+// ==============================
+// CHARGEMENT PAGE SEANCES
+// ==============================
+async function loadSeancesText() {
+  try {
+    const response = await fetch('content/seances.txt?t=' + Date.now());
+    if (!response.ok) throw new Error('Erreur HTTP : ' + response.status);
+
+    const text = await response.text();
+
+    // Fonction utilitaire pour extraire un bloc entre balises
+    const extract = (block, name) => {
+      const match = block.match(new RegExp(`\\[${name}\\]([\\s\\S]*?)\\[\\/${name}\\]`, 'i'));
+      return match ? match[1].trim() : "";
+    };
+
+    // EXTRACTION DES BLOCS EN / FR
+    const enBlock = extract(text, "EN");
+    const frBlock = extract(text, "FR");
+
+    // EXTRACTION DES BLOC INDIVIDUELS
+    const extractBlocks = (section) => {
+      const blocks = [];
+      const regex = /\[BLOCK\]([\s\S]*?)\[\/BLOCK\]/gi;
+      let match;
+
+      while ((match = regex.exec(section)) !== null) {
+        const block = match[1];
+        blocks.push({
+          title: extract(block, "TITLE"),
+          text: extract(block, "TEXT")
+        });
+      }
+      return blocks;
+    };
+
+    const enBlocks = extractBlocks(enBlock);
+    const frBlocks = extractBlocks(frBlock);
+
+    // Extraction de l’image finale
+    const imageMatch = text.match(/\[IMAGE\](.*?)\[\/IMAGE\]/);
+    const finalImage = imageMatch ? imageMatch[1].trim() : null;
+
+    // CONTENEURS
+    const enContainer = document.getElementById("seances-en");
+    const frContainer = document.getElementById("seances-fr");
+    const imageContainer = document.getElementById("seances-image");
+
+    if (!enContainer || !frContainer) {
+      console.error("Conteneurs introuvables pour la page Séances.");
+      return;
+    }
+
+    // Génération HTML EN
+    enContainer.innerHTML = enBlocks.map(b => `
+      <div class="session-block">
+        <h3>${b.title}</h3>
+        <p>${b.text.replace(/\n/g, "<br>")}</p>
+      </div>
+    `).join("");
+
+    // Génération HTML FR
+    frContainer.innerHTML = frBlocks.map(b => `
+      <div class="session-block">
+        <h3>${b.title}</h3>
+        <p>${b.text.replace(/\n/g, "<br>")}</p>
+      </div>
+    `).join("");
+
+    // Image finale
+    if (imageContainer && finalImage) {
+      imageContainer.innerHTML = `
+        <img src="images/${finalImage}" alt="Séances FP">
+      `;
+    }
+
+  } catch (e) {
+    console.error("Erreur loadSeancesText :", e);
+  }
+}
+
+
+

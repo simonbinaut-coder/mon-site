@@ -2,7 +2,7 @@
 body {
   margin: 0;
   font-family: "AvenirLight", sans-serif;
-  line-height: 1.6;
+  line-height: 2;
   color: #333;
   background-color: #F7F5EE; /* Couleur principale du fond */
   padding-top: 150px; /* espace pour menu fixe */
@@ -748,7 +748,11 @@ a.button:hover {
   }
 }
 
-section {
-  scroll-margin-top: 150px; /* même hauteur que ton menu fixe */
+#fp-text-en, #fp-text-fr {
+  margin: 0 auto;            /* centre le bloc */
+  max-width: 835px;          /* limite la largeur pour éviter les lignes trop longues */
+  text-align: center;       /* justifie le texte pour répartir les mots */
+  text-justify: inter-word;  /* ajuste l’espacement entre les mots */
+  line-height: 1.7;          /* interlignage agréable */
 }
 
