@@ -635,16 +635,24 @@ section img[alt="Animation illustrative"] {
 }
 
 .has-submenu .submenu {
-  max-height: 0;
-  overflow: hidden;
   transition: max-height 0.3s ease;
   opacity: 0;
 }
 
 /* Sous-menu ouvert */
-.has-submenu.open .submenu {
-  max-height: 500px; 
+.has-submenu.open .submenu { 
   opacity: 1;
+}
+
+@media (max-width: 768px) {
+  .has-submenu .submenu {
+    max-height: 70vh; /* Limite la hauteur à 70% de la hauteur de l'écran */
+    overflow-y: auto; /* Active le défilement vertical si nécessaire */
+    -webkit-overflow-scrolling: touch; /* Pour un défilement fluide sur iOS */
+    position: static; /* Permet au sous-menu de s'afficher normalement dans le flux */
+    width: 100%; /* Prend toute la largeur disponible */
+    padding-bottom: 20px; /* Espace en bas pour éviter que le contenu soit collé au bord */
+  }
 }
 
 /* Petite flèche visuelle */
