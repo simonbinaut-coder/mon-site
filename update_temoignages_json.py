@@ -2,9 +2,9 @@ import os
 import json
 
 # Chemin vers le dossier des témoignages
-temoignages_dir = r"C:\Users\simon\OneDrive\Documents\Site_internet_Laetitia\site\content\temoignages"
+temoignages_dir = "/Users/laetitiasaadi/Documents/Site_internet/site/content/temoignages"
 # Chemin vers le fichier JSON
-json_file = os.path.join(r"C:\Users\simon\OneDrive\Documents\Site_internet_Laetitia\site\content", "temoignages.json")
+json_file = os.path.join("/Users/laetitiasaadi/Documents/Site_internet/site/content", "temoignages.json")
 
 # Récupère tous les fichiers .txt dans le dossier
 txt_files = [
