@@ -1,0 +1,58 @@
+[EN]
+
+[BLOCK]
+[TITLE]° IN PERSON °[/TITLE]
+[TEXT]
+Training sessions are possible at my own apartment in Brussels where I have a small space to train. Among other equipment I own a Functional Patterns pulley machine.
+[/TEXT]
+[/BLOCK]
+
+[BLOCK]
+[TITLE]° ONLINE TRAINING °[/TITLE]
+[TEXT]
+Training sessions are also possible online. It’s totally normal to wonder if this type of training can really be efficient. I invite you to have a look at the « Testimonies » page to check examples of results of people who have work remotely with me. Online training is an efficient way to train and allow more flexibility in terms of time. You will need a clear space, even a small one and some small equipment.
+[/TEXT]
+[/BLOCK]
+
+[BLOCK]
+[TITLE]° FIRST APPOINTMENT °[/TITLE]
+[TEXT]
+The first general assessment costs 90€ (duration 90 minutes).
+Our first call is free of charge.
+We will then discuss which pack of sessions would be the more appropriate for you.
+[/TEXT]
+[/BLOCK]
+
+[/EN]
+
+---------------------------------------
+
+[FR]
+
+[BLOCK]
+[TITLE]° EN PRÉSENTIEL °[/TITLE]
+[TEXT]
+Je dispose d'un espace d'entraînement à mon domicile à Bruxelles équipé notamment d'une machine à poulies Functional Patterns.
+[/TEXT]
+[/BLOCK]
+
+[BLOCK]
+[TITLE]° EN LIGNE °[/TITLE]
+[TEXT]
+Les séances sont également possibles en ligne. Il est normal d'avoir des réticences concernant ce mode d'entraînement qui permet plus de flexibilité en terme de temps. Pour vous rassurer sur son efficacité, je vous invite à jeter un œil à l'onglet "Témoignages" pour avoir un exemple de progressions obtenues avec des clientes qui ont travaillé avec moi à distance.
+Vous aurez besoin d'un espace libre, même petit et d'un certain nombre de petits matériels que vous devrez vous procurer.
+[/TEXT]
+[/BLOCK]
+
+[BLOCK]
+[TITLE]° PREMIER ENTRETIEN °[/TITLE]
+[TEXT]
+La mise en relation (appel téléphonique) est offerte.
+Le premier bilan général coûte 90€ (durée 1h30).
+Nous discuterons ensuite du forfait le plus adapté pour vous.
+[/TEXT]
+[/BLOCK]
+
+[/FR]
+
+[IMAGE]seances.jpg[/IMAGE]

@@ -1,0 +1,766 @@
+/* RESET / BASE */
+body {
+  margin: 0;
+  font-family: "AvenirLight", sans-serif;
+  line-height: 2;
+  color: #333;
+  background-color: #F7F5EE; /* Couleur principale du fond */
+  padding-top: 150px; /* espace pour menu fixe */
+}
+
+/* MENU FIXE */
+header.navbar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  z-index: 1000;
+  background-color: #F1EBDD; /* Couleur secondaire pour le menu */
+  padding: 10px 0;
+  box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+}
+
+/* Conteneur logo + menu */
+.navbar-container {
+  display: flex;
+  flex-direction: column; /* logo au-dessus */
+  align-items: center;    /* centré horizontalement */
+  gap: 20px;
+  padding-top: 30px;      /* espace au-dessus du logo */
+  padding-bottom: 30px;   /* espace sous le menu */
+}
+
+/* Logo */
+.logo {
+  font-family: "PoppinsExtraLight", sans-serif;
+  font-size: 22px;        /* réduit pour tenir sur une ligne */
+  text-align: center;
+  white-space: nowrap;    /* empêche le passage sur 2 lignes */
+
+}
+
+/* Menu links desktop */
+.nav-links {
+  display: flex;          /* liens sur une ligne */
+  gap: 20px;
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  flex-wrap: nowrap;
+}
+
+.nav-links li a {
+  font-family: "PoppinsExtraLight", sans-serif;
+  text-decoration: none;
+  font-size: 13px;       /* taille réduite pour tenir sur une ligne */
+  white-space: nowrap;   /* empêche le texte de casser */
+  color: #333;
+  font-weight: 500;
+  transition: color 0.3s;
+  font-weight: bold;
+}
+
+.nav-links li a:hover,
+.nav-links li a.active {
+  color: #333;
+  border-bottom: none;
+}
+
+/* BOUTON BURGER POUR MOBILE */
+.burger {
+  display: none;
+  cursor: pointer;
+  flex-direction: column;
+  gap: 5px;
+  width: 25px;
+  height: 20px;
+}
+
+.burger div {
+  width: 25px;
+  height: 3px;
+  background-color: #333;
+  transition: all 0.3s ease;
+  border-radius: 2px;
+}
+
+/* RESPONSIVE MOBILE */
+@media (max-width: 768px) {
+  .nav-links {
+    position: fixed;
+    top: 70px; /* sous le menu */
+    left: -100%; /* caché par défaut */
+    flex-direction: column;
+    background-color: #F1EBDD; /* Couleur secondaire pour menu mobile */
+    width: 100%;
+    text-align: center;
+    transition: left 0.3s ease;
+    padding: 20px 0;
+    gap: 15px;
+  }
+
+  .nav-links.show {
+    left: 0; /* menu ouvert */
+  }
+
+  .burger {
+    display: flex; /* visible sur mobile */
+  }
+
+  .burger.toggle div:nth-child(1) {
+    transform: rotate(45deg) translate(5px, 5px);
+  }
+  .burger.toggle div:nth-child(2) {
+    opacity: 0;
+  }
+  .burger.toggle div:nth-child(3) {
+    transform: rotate(-45deg) translate(5px, -5px);
+  }
+
+  /* Ajustement taille texte mobile */
+  .nav-links a {
+    font-size: 16px;
+    padding: 10px 0;
+  }
+}
+
+
+  /* Menu visible quand actif */
+  .nav-links.active {
+    display: flex;
+  }
+
+
+
+/* HERO IMAGE - HOME */
+.hero-section {
+  background-image: url('images/home.jpg'); /* chemin vers ton image */
+  background-size: cover;
+  background-position: center top; /* Décale l'image vers le haut dès le départ */
+  background-attachment: scroll;
+  background-repeat: no-repeat;
+  width: 100%;
+  min-height: 100vh; /* Augmente la hauteur pour couvrir tout l'écran + marge */
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+  color: white;
+  text-align: center;
+  overflow: hidden; /* Empêche l'image de déborder */
+}
+
+@media (max-width: 768px) {
+  .hero-section {
+    background-attachment: scroll;
+  }
+}
+.hero-text {
+  background-color: rgba(0, 0, 0, 0);
+  padding: 20px 40px;
+  border-radius: 10px;
+  padding-top: 300px;
+}
+h1 {
+font-size: 75px;
+}
+
+h3 {
+  font-family: "CormorantGaramondLight", serif;
+  font-weight: 250; /* léger */
+  margin: 0 0 20px 0;
+  font-size: 30px;
+  font-weight: bold;
+}
+/* CONTENU DYNAMIQUE - Effet de fondu */
+#content {
+  opacity: 1;
+  transition: opacity 0.3s ease;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+/* SECTIONS */
+section {
+  margin-bottom: 40px;
+}
+
+h2 {
+  font-size: 28px;
+  margin-bottom: 20px;
+  text-align: center;
+
+}
+
+.container {
+  max-width: 960px;
+  margin: 40px auto;
+  padding: 0 20px;
+}
+
+/* FOOTER */
+footer {
+  background-color: #333;
+  color: #fff;
+  text-align: center;
+  padding: 20px 10px;
+}
+
+/* Pour la page de contact (et toutes les sections sous le menu fixe) */
+section#contact {
+  padding-top: 50px; /* 70px (menu) + 30px de marge */
+  min-height: calc(100vh - 70px); /* Hauteur minimale ajustée */
+}
+
+.contact-container {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 300px;
+  align-items: flex-start;
+   justify-content: center;
+  max-width: 1000px;
+  margin: 0 auto;
+}
+.contact-info {
+  flex: 1;
+  min-width: 300px;
+  max-width: 400px; /* Limite la largeur pour un meilleur alignement */
+  text-align: left;
+}
+.contact-info h2 {
+  text-align: center; /* Titre centré */
+  margin-bottom: 20px;
+}
+
+.contact-info p {
+  text-align: center; /* Paragraphe centré */
+  margin-bottom: 15px;
+  line-height: 1.6;
+}
+
+.email-link {
+  color: #000;
+  text-decoration: none;
+ /* font-weight: 500;*/
+}
+
+.email-link:hover {
+  text-decoration: underline;
+}
+.contact-form {
+  flex: 1;
+  min-width: 300px;
+  max-width: 500px;
+}
+.form-group {
+  margin-bottom: 15px;
+}
+.form-group label {
+  display: block;
+  margin-bottom: 5px;
+  font-weight: 500;
+}
+.form-group input,
+.form-group textarea {
+  width: 100%;
+  padding: 10px;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  font-family: inherit;
+  font-size: 16px;
+}
+.form-group textarea {
+  resize: vertical;
+}
+
+/* Réduction de l'espacement dans la page Contact (mobile) */
+@media (max-width: 768px) {
+  .contact-container {
+    gap: 20px; /* Réduit l'espace entre les colonnes */
+  }
+
+  .contact-form {
+    margin-top: 10px; /* Réduit la marge supérieure */
+  }
+
+  .contact-info {
+    margin-top: -50px;
+  }
+
+  .form-group {
+    margin-bottom: 10px; /* Réduit l'espace entre les champs */
+  }
+
+  /* Pour la page Home (hero section) */
+  .hero-section {
+    padding-top: 200px; /* Réduit le padding supérieur */
+  }
+
+  .hero-text {
+    padding: 15px 20px; /* Réduit le padding du texte */
+  }
+
+  h1 {
+    font-size: 2.2rem; /* Réduit la taille du titre */
+    margin-bottom: 10px; /* Réduit la marge inférieure */
+  }
+
+}
+
+  h3 {
+    font-size: 1.5rem; /* Réduit la taille du sous-titre */
+  }
+}
+
+
+/* Style pour le GIF dans la page "À propos" */
+section img[alt="Animation illustrative"] {
+  max-width: 500px; /* Ajuste la taille max selon ton GIF */
+  height: auto;
+  display: block;
+  margin-top: 50px;
+  margin-bottom: 50px;
+  margin-left: auto;
+  margin-right: auto;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Ombre légère pour le détacher */
+}
+
+
+/* Style pour la page Sessions */
+#sessions .container {
+  max-width: 900px;
+  margin: 0 auto;
+  padding: 20px;
+  text-align: center;
+}
+
+.session-block {
+  margin-bottom: 30px;
+  padding: 20px;
+  display: inline-block; /* Pour centrer les blocs */
+  max-width: 80%; /* Largeur max des blocs */
+}
+
+.session-block h3 {
+  font-weight: bold;
+  color: #2c3e50;
+  margin: 0 0 10px;
+  font-size: 1.3em;
+}
+
+.session-block p {
+  margin: 0;
+  line-height: 1.6;
+  color: #333;
+}
+
+/* Style pour l'image des séances */
+#sessions img {
+  max-width: 800px; /* Largeur max de l'image */
+  width: 90%; /* S'adapte à la taille du conteneur */
+  margin: 20px auto;
+  display: block;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+/* Témoignages */
+/* ===================== */
+/* Dropdown visible au-dessus du menu */
+.temoignages-dropdown {
+  text-align: center;
+  margin-bottom: 20px;
+  position: relative;
+  z-index: 1100; /* Supérieur au menu */
+}
+
+#temoignages-select {
+  padding: 8px 12px;
+  font-size: 14px;
+  border-radius: 5px;
+  border: 1px solid #ccc;
+  background: #F1EBDD;
+  cursor: pointer;
+}
+
+/* Conteneur des cards desktop */
+.temoignages-container {
+  position: relative;
+  max-width: 1200px;
+  margin: 40px auto;
+  min-height: 550px;
+  overflow: visible;
+}
+
+/* Card desktop */
+.temoignage-card {
+  position: absolute;
+  top: 0;
+  left: 50%;
+  transform: translateX(-50%) scale(0.8);
+  opacity: 0;
+  width: 85%;
+  min-height: 500px;
+  background: #F1EBDD;
+  border-radius: 10px;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+  transition: all 0.6s ease;
+  z-index: 0;
+  display: flex;
+  overflow: hidden;
+}
+
+/* Card active */
+.temoignage-card.active {
+  opacity: 1;
+  transform: translateX(-50%) scale(1);
+  z-index: 10;
+  box-shadow: 0 20px 40px rgba(0,0,0,0.3);
+}
+
+/* Contenu card */
+.card-content {
+  display: flex;
+  width: 100%;
+}
+
+.card-image-container {
+  flex: 1;
+  padding: 20px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.card-image-container img {
+  max-width: 100%;
+  max-height: 300px;
+  object-fit: contain;
+  border-radius: 5px;
+}
+
+.card-text-container {
+  flex: 1.5;
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  text-align: center;
+  background: #F7F5EE;
+}
+
+.card-text-container h3 {
+  margin-bottom: 15px;
+}
+
+.card-text-container p {
+  max-height: 350px;
+  overflow: hidden;
+  white-space: pre-line;
+  transition: max-height 0.3s ease;
+}
+
+.read-more-btn {
+  display: none;
+  margin: 10px auto 0;
+  padding: 8px 16px;
+  background: #333;
+  color: #fff;
+  border: none;
+  border-radius: 15px;
+  cursor: pointer;
+}
+
+/* MOBILE */
+.temoignages-mobile {
+  display: block;
+  max-width: 90%;
+  margin: 20px auto;
+}
+
+.temoignages-mobile .temoignage {
+  display: none;
+  background: #F7F5EE;
+  border-radius: 8px;
+  padding: 1rem;
+  margin-bottom: 1.2rem;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+  text-align: center; /* Ajoute cette ligne pour centrer le texte */
+}
+
+.temoignages-mobile .temoignage.active {
+  display: block;
+}
+
+.temoignages-mobile img {
+  width: 80%;
+  max-height: 200px;
+  object-fit: contain;
+  margin: 0 auto 0.8rem;
+  display: block; /* Assure que l'image est un bloc pour le centrage */
+  border-radius: 6px;
+}
+
+/* Désactive les règles pour .temoignages-container */
+.temoignages-container {
+  display: none;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .temoignages-container {
+    display: none;
+  }
+  .temoignages-mobile {
+    display: block;
+  }
+}
+
+
+/* ================================
+   FONTS PERSONNALISÉES
+================================ */
+
+/* Avenir Light */
+@font-face {
+  font-family: "AvenirLight";
+  src: url("fonts/Avenir Light.ttf") format("truetype");
+  font-weight: 300;
+  font-style: normal;
+}
+
+/* Cormorant Garamond Light */
+@font-face {
+  font-family: "CormorantGaramondLight";
+  src: url("fonts/CormorantGaramond-Light.ttf") format("truetype");
+  font-weight: 300;
+  font-style: normal;
+}
+
+/* Poppins ExtraLight */
+@font-face {
+  font-family: "PoppinsExtraLight";
+  src: url("fonts/Poppins-ExtraLight.ttf") format("truetype");
+  font-weight: 200;
+  font-style: normal;
+}
+
+/* Sous-menu Témoignages */
+.nav-links li ul.submenu {
+  display: none;
+  position: absolute;
+  top: 100%;
+  left: 0;
+  background: #F1EBDD;
+  padding: 5px 0;
+  list-style: none;
+  min-width: 180px;
+  border-radius: 5px;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+  z-index: 1050;
+}
+
+.nav-links li ul.submenu li {
+  padding: 5px 15px;
+}
+
+.nav-links li ul.submenu li a {
+  display: block;
+  padding: 5px 0;
+  font-size: 14px;
+}
+
+/* Hover pour desktop */
+.nav-links li:hover ul.submenu {
+  display: block;
+}
+
+/* Sous-menu mobile (affiché au clic) */
+@media (max-width: 768px) {
+  .nav-links li ul.submenu {
+    position: static;
+    display: none;
+    flex-direction: column;
+    padding: 0;
+    box-shadow: none;
+  }
+
+  .nav-links li.active ul.submenu {
+    display: flex;
+  }
+}
+
+/* Sous-menu Témoignages */
+.has-submenu {
+  position: relative; /* IMPORTANT : le sous-menu se positionne par rapport à ce li */
+}
+
+.has-submenu .submenu {
+  display: none;
+  position: absolute;
+  top: 100%; /* juste en dessous du lien Témoignages */
+  left: 0;    /* aligné à gauche du li */
+  background-color: #F1EBDD;
+  list-style: none;
+  padding: 10px 0;
+  margin: 0;
+  min-width: 200px; /* largeur du sous-menu */
+  box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+  z-index: 1000;
+}
+
+.has-submenu:hover .submenu {
+  max-height: 500px;
+  opacity: 1;
+}
+
+.has-submenu .submenu li a {
+  display: block;
+  padding: 8px 15px;
+  color: #333;
+  font-size: 14px;
+  text-decoration: none;
+  white-space: nowrap;
+}
+
+.has-submenu .submenu li a:hover {
+  background-color: #E6DFC7;
+}
+
+.has-submenu .submenu {
+  transition: max-height 0.3s ease;
+  opacity: 0;
+}
+
+/* Sous-menu ouvert */
+.has-submenu.open .submenu { 
+  opacity: 1;
+}
+
+@media (max-width: 768px) {
+  .has-submenu .submenu {
+    max-height: 70vh; /* Limite la hauteur à 70% de la hauteur de l'écran */
+    overflow-y: auto; /* Active le défilement vertical si nécessaire */
+    -webkit-overflow-scrolling: touch; /* Pour un défilement fluide sur iOS */
+    position: static; /* Permet au sous-menu de s'afficher normalement dans le flux */
+    width: 100%; /* Prend toute la largeur disponible */
+    padding-bottom: 20px; /* Espace en bas pour éviter que le contenu soit collé au bord */
+  }
+}
+
+/* Petite flèche visuelle */
+.has-submenu > a::after {
+  content: "▾";
+  margin-left: 6px;
+  font-size: 0.8em;
+  transition: 0.3s;
+}
+
+.has-submenu.open > a::after {
+  transform: rotate(180deg);
+} 
+
+/* Style des nouveaux boutons */
+button,
+a.button {
+  padding: 10px 18px;
+  border: 2px solid #000;
+  background: transparent;
+  color: #000;
+  font-family: inherit;
+  font-size: 16px;
+  cursor: pointer;
+  transition: all 0.25s ease;
+  text-decoration: none;
+  display: inline-block;
+}
+
+button:hover,
+a.button:hover {
+  background: #000;
+  color: #fff;
+}
+
+.video-wrapper {
+  position: relative;
+  width: 50%;               /* largeur de la vidéo */
+  height: 400px;             /* hauteur fixe */
+  margin: 30px auto;         /* centré horizontalement avec marge */
+  border-radius: 30px;       /* arrondis visibles */
+  overflow: hidden;          /* clippe la vidéo à l'intérieur du conteneur */
+}
+
+#about-video {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;        /* crop uniforme en remplissant le conteneur */
+  object-position: center;  /* centrage de la vidéo */
+  display: block;
+  /* border-radius: 30px;  --> pas nécessaire si le conteneur a déjà l'arrondi */
+}
+
+/* Correction de la vidéo en portrait (mobile) */
+@media (max-width: 768px) {
+  .video-wrapper {
+    width: 80%; /* Prend toute la largeur */
+    max-width: 100%; /* Ratio 16:9 pour paysage */
+    margin: 30px auto;
+    border-radius: 30px;
+    overflow: hidden;
+    position: relative;
+  }
+
+  /* Vidéo pour mobile */
+  #about-video {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    border-radius: 15px; /* Optionnel : si tu veux aussi arrondir la vidéo elle-même */
+  }
+}
+
+.temoignage-douleur {
+  text-align: center;
+  font-size: 1.5rem;
+  font-weight: bold;
+  margin-bottom: 20px;
+  color: #2c3e50;
+  text-transform: uppercase;
+}
+
+.temoignage-signature {
+  text-align: right;
+  font-style: italic;
+  margin-top: 10px;
+  color: #555;
+}
+
+@media (min-width: 769px) {
+  .temoignage img {
+    max-width: 70%;    /* augmenter par rapport à mobile */
+    max-height: 400px; /* ajuste la hauteur max */
+    margin: 0 auto 20px;
+    display: block;
+    border-radius: 8px;
+    object-fit: contain;
+    margin-top: -50px;
+  }
+}
+
+#fp-text-en, #fp-text-fr {
+  margin: 0 auto;            /* centre le bloc */
+  max-width: 835px;          /* limite la largeur pour éviter les lignes trop longues */
+  text-align: center;       /* justifie le texte pour répartir les mots */
+  text-justify: inter-word;  /* ajuste l’espacement entre les mots */
+  line-height: 1.7;          /* interlignage agréable */
+}
+
