@@ -3,7 +3,7 @@
 [BLOCK]
 [TITLE]° IN PERSON °[/TITLE]
 [TEXT]
-Training sessions are possible at my own apartment in Brussels where I have a small space to train. Among other equipment I own a Functional Patterns pulley machine.
+Training sessions take place in a personal training studio in Brussels. Among other equipment there is a Functional Patterns pulley machine.
 [/TEXT]
 [/BLOCK]
 
@@ -32,7 +32,7 @@ We will then discuss which pack of sessions would be the more appropriate for yo
 [BLOCK]
 [TITLE]° EN PRÉSENTIEL °[/TITLE]
 [TEXT]
-Je dispose d'un espace d'entraînement à mon domicile à Bruxelles équipé notamment d'une machine à poulies Functional Patterns.
+Les séances ont lieu dans un studio de personal training à Bruxelles équipé notamment d'une machine à poulies Functional Patterns.
 [/TEXT]
 [/BLOCK]
 
