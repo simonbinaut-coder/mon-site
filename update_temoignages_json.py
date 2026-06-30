@@ -4,7 +4,7 @@ import json
 # Chemin vers le dossier des témoignages
 temoignages_dir = "/home/simon/Documents/site/content/temoignages"
 # Chemin vers le fichier JSON
-json_file = os.path.join(temoignages_dir, "temoignages.json")
+json_file = os.path.join("/home/simon/Documents/site/content/", "temoignages.json")
 
 # Récupère tous les fichiers .txt dans le dossier
 txt_files = [
