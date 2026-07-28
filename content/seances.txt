@@ -17,7 +17,7 @@ Training sessions are also possible online. It’s totally normal to wonder if t
 [BLOCK]
 [TITLE]° FIRST APPOINTMENT °[/TITLE]
 [TEXT]
-The first general assessment costs 90€ (duration 90 minutes).
+The first general assessment costs 100€ (duration 90 minutes).
 Our first call is free of charge.
 We will then discuss which pack of sessions would be the more appropriate for you.
 [/TEXT]
@@ -48,7 +48,7 @@ Vous aurez besoin d'un espace libre, même petit et d'un certain nombre de petit
 [TITLE]° PREMIER ENTRETIEN °[/TITLE]
 [TEXT]
 La mise en relation (appel téléphonique) est offerte.
-Le premier bilan général coûte 90€ (durée 1h30).
+Le premier bilan général coûte 100€ (durée 1h30).
 Nous discuterons ensuite du forfait le plus adapté pour vous.
 [/TEXT]
 [/BLOCK]
